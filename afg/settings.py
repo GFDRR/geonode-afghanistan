@@ -19,8 +19,10 @@
 #########################################################################
 
 # Django settings for the GeoNode project.
+
 import os
 from geonode.local_settings import *
+
 #
 # General Django development settings
 #
@@ -35,10 +37,10 @@ WSGI_APPLICATION = "afg.wsgi.application"
 
 
 # Load more settings from a file called local_settings.py if it exists
-try:
-    from local_settings import *
-except ImportError:
-    pass
+#try:
+#    from local_settings import *
+#except ImportError:
+#    pass
 
 # Additional directories which hold static files
 STATICFILES_DIRS.append(
@@ -47,9 +49,8 @@ STATICFILES_DIRS.append(
 
 # Note that Django automatically includes the "templates" dir in all the
 # INSTALLED_APPS, se there is no need to add maps/templates or admin/templates
-TEMPLATE_DIRS = (
-    os.path.join(LOCAL_ROOT, "templates"),
-) + TEMPLATE_DIRS
+TEMPLATES[0]['DIRS'].insert(0, os.path.join(LOCAL_ROOT, "templates"))
+
 
 # Location of url mappings
 ROOT_URLCONF = 'afg.urls'
