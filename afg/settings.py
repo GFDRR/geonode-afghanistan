@@ -61,6 +61,7 @@ LOCALE_PATHS = (
     ) + LOCALE_PATHS
 
 RISKS = {'DEFAULT_LOCATION': 'AF',
-         'PDF_GENERATOR': {'NAME': 'wkhtml2pdf',
+         'PDF_GENERATOR': {'NAME': 'weasyprint_api',
+                           #'NAME': 'wkhtml2pdf',
                            'BIN': '/usr/bin/xvfb-run /usr/bin/wkhtmltopdf',
                            'ARGS': []}}
