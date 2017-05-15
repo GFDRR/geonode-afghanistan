@@ -1,0 +1,64 @@
+.jumbotron {
+	/*background: url('../img/earth.jpg') no-repeat center center #146311 !important;*/
+    background:          #146311 !important;
+    background-image:    url('../img/Afghanistan.jpg')  !important;
+    background-size:     cover !important;                      /* <------ */
+    background-repeat:   no-repeat !important;
+    background-position: center center !important;              /* optional, center the image */
+}
+.navbar-inverse .navbar-nav > li > a {
+	font-size:16px;
+	font-weight: bold;
+	color:#E8E004;
+}
+.navbar.navbar-inverse {
+	background-color:#1985C4;
+}
+#exploration {
+	position:absolute;
+	top:0px;
+	right:50px;
+	list-style:none;
+}
+#exploration a {
+	color:#fff !important;
+}
+/*#exploration li {
+	margin-bottom:10px;
+}
+#exploration li a {
+	background:#35AF16;
+	box-shadow: 0px 0px 3px rgba(0,0,0,0.4);
+	padding:2px 5px;
+}*/
+#banner-home .container-fluid {
+	position:relative;
+	height:300px;
+}
+.navbar-brand {
+	text-indent:0 !important;
+	background:none !important;
+	color:yellow !important;
+	width:260px !important;
+	position:relative;
+	top:-10px;
+	color:#fff !important;
+	font-weight: bold;
+} 
+#logos {
+	margin:0;
+	padding:0;
+	position:absolute;
+	bottom:-40px;
+	left:250px;
+}
+#logos {
+	list-style: none;
+}
+#logos li {
+	display:inline-block;
+	margin-right:20px;
+}
+#logos li img {
+	max-height:50px;
+}
