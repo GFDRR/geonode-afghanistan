@@ -19,15 +19,17 @@
 #########################################################################
 
 # Django settings for the GeoNode project.
-
 import os
-from geonode.local_settings import *
-
+from geonode.settings import *
 #
 # General Django development settings
 #
 
+DEBUG = False
+
 SITENAME = 'afg'
+
+ALLOWED_HOSTS = ['198.50.229.90', 'localhost', '127.0.0.1', 'disasterrisk-af-dev.geo-solutions.it', 'disasterrisk.af.geonode.org', 'disasterrisk.af', 'www.disasterrisk.af']
 
 # Defines the directory that contains the settings file as the LOCAL_ROOT
 # It is used for relative settings elsewhere.
@@ -37,20 +39,17 @@ WSGI_APPLICATION = "afg.wsgi.application"
 
 
 # Load more settings from a file called local_settings.py if it exists
-#try:
-#    from local_settings import *
-#except ImportError:
-#    pass
+try:
+    from local_settings import *
+except ImportError:
+    pass
+
+SITEURL = "http://disasterrisk.af/"
 
 # Additional directories which hold static files
 STATICFILES_DIRS.append(
     os.path.join(LOCAL_ROOT, "static"),
 )
-
-# Note that Django automatically includes the "templates" dir in all the
-# INSTALLED_APPS, se there is no need to add maps/templates or admin/templates
-TEMPLATES[0]['DIRS'].insert(0, os.path.join(LOCAL_ROOT, "templates"))
-
 
 # Location of url mappings
 ROOT_URLCONF = 'afg.urls'
@@ -60,8 +59,32 @@ LOCALE_PATHS = (
     os.path.join(LOCAL_ROOT, 'locale'),
     ) + LOCALE_PATHS
 
+GEONODE_CONTRIB_APPS = (
+    'geonode.contrib.risks',
+)
+
+INSTALLED_APPS = INSTALLED_APPS + GEONODE_CONTRIB_APPS + ('afg',)
+
+TEMPLATES[0]['DIRS'].insert(0, os.path.join(LOCAL_ROOT, "templates"))
+
+#LAYER_PREVIEW_LIBRARY = 'leaflet'
+ACCOUNT_OPEN_SIGNUP = False
+
+# use when geonode.contrib.risks is in installed apps.
 RISKS = {'DEFAULT_LOCATION': 'AF',
          'PDF_GENERATOR': {'NAME': 'weasyprint_api',
                            #'NAME': 'wkhtml2pdf',
                            'BIN': '/usr/bin/xvfb-run /usr/bin/wkhtmltopdf',
                            'ARGS': []}}
+
+# add following lines to your local settings to enable monitoring
+MONITORING_ENABLED = True
+
+if MONITORING_ENABLED:
+    if 'geonode.contrib.monitoring' not in INSTALLED_APPS:
+        INSTALLED_APPS += ('geonode.contrib.monitoring',)
+        if 'geonode.contrib.monitoring.middleware.MonitoringMiddleware' not in MIDDLEWARE_CLASSES:
+            MIDDLEWARE_CLASSES += ('geonode.contrib.monitoring.middleware.MonitoringMiddleware',)
+        MONITORING_CONFIG = None
+        MONITORING_HOST_NAME = os.getenv("MONITORING_HOST_NAME", 'disasterrisk.af')
+        MONITORING_SERVICE_NAME = 'geonode'
