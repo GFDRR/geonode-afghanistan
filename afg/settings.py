@@ -20,7 +20,7 @@
 
 # Django settings for the GeoNode project.
 import os
-from geonode.settings import *
+from geonode.local_settings import *
 #
 # General Django development settings
 #
