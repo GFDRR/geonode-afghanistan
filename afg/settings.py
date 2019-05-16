@@ -94,3 +94,50 @@ if MONITORING_ENABLED:
         MONITORING_CONFIG = None
         MONITORING_HOST_NAME = os.getenv("MONITORING_HOST_NAME", 'disasterrisk.af')
         MONITORING_SERVICE_NAME = 'geonode'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d '
+                      '%(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(message)s',
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'ERROR',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_debug_false'],
+            'class': 'django.utils.log.AdminEmailHandler',
+        }
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"], "level": "ERROR", },
+        "geonode": {
+            "handlers": ["console"], "level": "ERROR", },
+        "geonode.qgis_server": {
+            "handlers": ["console"], "level": "ERROR", },
+        "gsconfig.catalog": {
+            "handlers": ["console"], "level": "ERROR", },
+        "owslib": {
+            "handlers": ["console"], "level": "ERROR", },
+        "pycsw": {
+            "handlers": ["console"], "level": "ERROR", },
+        "celery": {
+            "handlers": ["console"], "level": "ERROR", },
+    },
+}

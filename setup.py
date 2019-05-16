@@ -6,7 +6,7 @@ def read(*rnames):
 
 setup(
     name="afg",
-    version="0.2",
+    version="0.3",
     author="",
     author_email="",
     description="afg, based on GeoNode",
@@ -23,6 +23,5 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'django-tastypie==0.13.0',
     ]
 )
