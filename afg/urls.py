@@ -1,14 +1,14 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from django.views.generic import TemplateView
 
 from geonode.urls import *
 
 urlpatterns += [
-        url(r'^risks/', include('geonode.contrib.risks.urls', namespace='risks')),
-    ]
+    url(r'^geonode_risks/', include('geonode_risks.urls', namespace='risks')),
+]
 
-urlpatterns = patterns('',
+urlpatterns = [ 
    url(r'^/?$',
        TemplateView.as_view(template_name='site_index.html'),
        name='home'),
- ) + urlpatterns
+] + urlpatterns

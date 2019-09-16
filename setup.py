@@ -6,7 +6,7 @@ def read(*rnames):
 
 setup(
     name="afg",
-    version="0.3",
+    version="2.10.1",
     author="",
     author_email="",
     description="afg, based on GeoNode",

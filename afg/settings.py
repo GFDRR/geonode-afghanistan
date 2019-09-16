@@ -19,8 +19,15 @@
 #########################################################################
 
 # Django settings for the GeoNode project.
+import ast
 import os
-from geonode.local_settings import *
+from urlparse import urlparse, urlunparse
+# Load more settings from a file called local_settings.py if it exists
+try:
+    from geonode.local_settings import *
+except ImportError:
+    from geonode.settings import *
+
 #
 # General Django development settings
 #
@@ -29,7 +36,7 @@ DEBUG = False
 
 SITENAME = 'afg'
 
-ALLOWED_HOSTS = ['198.50.229.90', 'localhost', '127.0.0.1', 'disasterrisk-af-dev.geo-solutions.it', 'disasterrisk.af.geonode.org', 'disasterrisk.af', 'www.disasterrisk.af']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'disasterrisk-af-dev.geo-solutions.it', 'www.disasterrisk-af-dev.geo-solutions.it']
 
 # Defines the directory that contains the settings file as the LOCAL_ROOT
 # It is used for relative settings elsewhere.
@@ -37,14 +44,13 @@ LOCAL_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 WSGI_APPLICATION = "afg.wsgi.application"
 
-
 # Load more settings from a file called local_settings.py if it exists
 try:
     from local_settings import *
 except ImportError:
     pass
 
-SITEURL = "http://disasterrisk.af/"
+SITEURL = "https://disasterrisk-af-dev.geo-solutions.it/"
 
 # Additional directories which hold static files
 STATICFILES_DIRS.append(
@@ -60,7 +66,7 @@ LOCALE_PATHS = (
     ) + LOCALE_PATHS
 
 GEONODE_CONTRIB_APPS = (
-    'geonode.contrib.risks',
+    'geonode_risks',
 )
 
 INSTALLED_APPS = INSTALLED_APPS + GEONODE_CONTRIB_APPS + ('afg',)
@@ -73,7 +79,6 @@ LOGOUT_URL = os.getenv('LOGOUT_URL', '{}account/logout/'.format(SITEURL))
 
 ACCOUNT_LOGIN_REDIRECT_URL = os.getenv('LOGIN_REDIRECT_URL', SITEURL)
 ACCOUNT_LOGOUT_REDIRECT_URL =  os.getenv('LOGOUT_REDIRECT_URL', SITEURL)
-
 ACCOUNT_OPEN_SIGNUP = False
 
 # use when geonode.contrib.risks is in installed apps.
@@ -82,18 +87,6 @@ RISKS = {'DEFAULT_LOCATION': 'AF',
                            #'NAME': 'wkhtml2pdf',
                            'BIN': '/usr/bin/xvfb-run /usr/bin/wkhtmltopdf',
                            'ARGS': []}}
-
-# add following lines to your local settings to enable monitoring
-MONITORING_ENABLED = True
-
-if MONITORING_ENABLED:
-    if 'geonode.contrib.monitoring' not in INSTALLED_APPS:
-        INSTALLED_APPS += ('geonode.contrib.monitoring',)
-        if 'geonode.contrib.monitoring.middleware.MonitoringMiddleware' not in MIDDLEWARE_CLASSES:
-            MIDDLEWARE_CLASSES += ('geonode.contrib.monitoring.middleware.MonitoringMiddleware',)
-        MONITORING_CONFIG = None
-        MONITORING_HOST_NAME = os.getenv("MONITORING_HOST_NAME", 'disasterrisk.af')
-        MONITORING_SERVICE_NAME = 'geonode'
 
 LOGGING = {
     'version': 1,
@@ -129,9 +122,11 @@ LOGGING = {
             "handlers": ["console"], "level": "ERROR", },
         "geonode": {
             "handlers": ["console"], "level": "ERROR", },
+        "geonode_risks": {
+            "handlers": ["console"], "level": "DEBUG", },
         "geonode.qgis_server": {
             "handlers": ["console"], "level": "ERROR", },
-        "gsconfig.catalog": {
+        "geoserver-restconfig.catalog": {
             "handlers": ["console"], "level": "ERROR", },
         "owslib": {
             "handlers": ["console"], "level": "ERROR", },
@@ -141,3 +136,13 @@ LOGGING = {
             "handlers": ["console"], "level": "ERROR", },
     },
 }
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = False
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
