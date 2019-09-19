@@ -107,7 +107,7 @@ LOGGING = {
     },
     'handlers': {
         'console': {
-            'level': 'ERROR',
+            'level': 'DEBUG',
             'class': 'logging.StreamHandler',
             'formatter': 'simple'
         },
@@ -115,15 +115,15 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler',
-        }
+        },
     },
     "loggers": {
         "django": {
             "handlers": ["console"], "level": "ERROR", },
         "geonode": {
-            "handlers": ["console"], "level": "ERROR", },
-        "geonode_risks": {
             "handlers": ["console"], "level": "DEBUG", },
+        "geonode_risks": {
+            "handlers": ["console"], "level": "ERROR", },
         "geonode.qgis_server": {
             "handlers": ["console"], "level": "ERROR", },
         "geoserver-restconfig.catalog": {
