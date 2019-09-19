@@ -52,6 +52,9 @@ except ImportError:
 
 SITEURL = "https://disasterrisk-af-dev.geo-solutions.it/"
 
+CLIENT_RESULTS_LIMIT = 4
+AVATAR_GRAVATAR_SSL = True
+
 # Additional directories which hold static files
 STATICFILES_DIRS.append(
     os.path.join(LOCAL_ROOT, "static"),
