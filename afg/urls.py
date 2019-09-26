@@ -11,4 +11,8 @@ urlpatterns = [
    url(r'^/?$',
        TemplateView.as_view(template_name='site_index.html'),
        name='home'),
+   url(r'^project_information/$',
+       TemplateView.as_view(template_name='project_information.html'),
+       name='project_information'),
+
 ] + urlpatterns

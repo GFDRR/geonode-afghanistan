@@ -36,7 +36,7 @@ DEBUG = False
 
 SITENAME = 'afg'
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'disasterrisk-af-dev.geo-solutions.it', 'www.disasterrisk-af-dev.geo-solutions.it']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'disasterrisk.af', 'www.disasterrisk.af']
 
 # Defines the directory that contains the settings file as the LOCAL_ROOT
 # It is used for relative settings elsewhere.
@@ -50,7 +50,7 @@ try:
 except ImportError:
     pass
 
-SITEURL = "https://disasterrisk-af-dev.geo-solutions.it/"
+SITEURL = "https://disasterrisk.af/"
 
 CLIENT_RESULTS_LIMIT = 4
 AVATAR_GRAVATAR_SSL = True

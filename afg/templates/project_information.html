@@ -1,0 +1,108 @@
+{% extends "geonode_base.html" %}
+
+{% load i18n %}
+{% block title %} {% trans "Project Information" %} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+<div class="page-header">
+  <h2>{% trans "Project Information" %}</h2>
+</div>
+<p class="lead">{% trans "Why the Disasterrisk.af platform?" %}</p>
+<p>
+{% blocktrans %}
+Reliable risk information is critical for resilient development planning, public policy and investments. This is especially critical in Afghanistan, where disasters caused by natural hazards have affected nine million people and inflicted more than 20,000 fatalities since 1980. However, high levels of poverty, fragility and conflict make it challenging to collect risk information and build resilience in the country.
+{% endblocktrans %}
+</p>
+<p>
+{% blocktrans %}
+When the World Bank's South Asia Disaster Risk Management (DRM) and Climate Change team started working in Afghanistan, very little information was available on hazards and risk. In 2018, with support from the Global Facility for Disaster Risk Reduction and Recovery and the Government of Japan, the team set out to produce basic information essential to DRM. They developed innovations for visualization and cost-benefit analysis on top of a standard GeoNode, which have enabled Afghanistan.s planning processes to incorporate disaster considerations.
+{% endblocktrans %}
+</p>
+<p>
+{% blocktrans %}
+Video overview of the World Bank's DRM Program in Afghanistan
+{% endblocktrans %}
+</p>
+<p>
+<iframe width="560" height="315" src="https://www.youtube-nocookie.com/embed/JOp2Barzpbk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</p>
+<p class="lead">{% trans "Multi-hazard risk assessment for Afghanistan" %}</p>
+<p>
+{% blocktrans %}
+The Multi-Hazard Risk Assessment (MHRA) and the Afghanistan Risk profiles are the first of its kind in a fragile state and have already contributed to raise awareness on current and future disaster risks in Afghanistan. Policy makers, government counterparts, partner organizations and agencies for the first time have access to comprehensive and critical risk information. These tools are now helping the government to better understand the country.s exposure to multiple natural hazards and take proactive measures to strengthen preparedness to avoid further pressures. The results of the risk assessment have been visualized, for ease of reference, in the Afghanistan Risk Profile and the online geospatial Afghanistan Disaster Risk Info GeoNode. The MHRA was adopted by the Government of Afghanistan in December 2018 in Washington DC.
+{% endblocktrans %}
+</p>
+<p>
+ <ul>
+  <li>{% trans "Find the full report here" %}: <a href="https://www.gfdrr.org/sites/default/files/publication/Afghanistan_MHRA.pdf" traget="_new">Afghanistan_MHRA.pdf</a></li>
+  <li>{% trans "Disaster risk profile of Afghanistan" %}: <a href="https://www.gfdrr.org/sites/default/files/documents/afghanistan_drp_low.pdf" traget="_new">afghanistan_drp_low.pdf</a></li>
+ </ul>
+</p>
+<p class="lead">{% trans "What is Geonode and why are we using it" %}</p>
+<p>
+{% blocktrans %}
+The GeoNode is a a public platform that allows users to create, share and access geospatial data and maps for decision-making about disaster risk in Afghanistan. It is a visualization of a Multi-Hazard Risk Assessment and contains data on xxxxxx
+{% endblocktrans %}
+</p>
+<p>
+{% blocktrans %}
+Targeted capacity building efforts for Afghan officials have allowed users to: (i) map out risks in open data format; (ii) possibility to zoom in on specific geographic locations to assess risks; (iii) provides cost-benefit analysis for floods and earthquakes and; (iv) inform Bank operations and overall development planning.
+{% endblocktrans %}
+</p>
+<p>
+{% blocktrans %}
+To facilitate these objectives, the GeoNode allows users to share, visualize and download maps and GIS layers in formats that can be reused in off-the shelf GIS software both free and proprietary. GeoNode is a free and open source software, meaning anyone can download and install it and create their own webGIS instance. In the case of disasterrisk.af the web platform relies on GeoNode technology, and has been developed and produced with support from GFDRR of the WB.
+{% endblocktrans %}
+</p>
+<p>
+{% trans "For more information on GeoNode and other projects using it, see here" %}:
+ <ul>
+  <li><a href="http://geonode.org/" traget="_new">geonode.org</a></li>
+  <li><a href="https://opendri.org/tag/geonode/" traget="_new">opendri.org</a></li>
+ </ul>
+</p>
+<p class="lead">{% trans "Success stories of GeoNode use in AF" %}</p>
+<p>
+{% blocktrans %}
+The Multi-Hazard Risk Assessment has been used to integrate risk considerations into development planning, public policy and investments in assuring the resilience of new and existing reconstruction to natural hazards and climate change, which are critical to secure both lives and livelihoods. The Government of Afghanistan has been mainstreaming DRM across key sectors in its World Bank.s investment portfolio to strengthen resilience in the following sectors:
+{% endblocktrans %}
+</p>
+<p>
+ <ul>
+  <li><strong>{% trans "The" %} <a href="http://projects.worldbank.org/P159378?lang=en" traget="_new">{% trans "Education Quality Reform in Afghanistan Project" %}</a>:</strong> {% blocktrans %}This new basic education project, currently under early stages of implementation, sets out to support reforms and results outlined in the National Education Strategic Plan, including construction of 1,945 schools in the next two years. The work carried out has served to inform the designs of the new schools to be constructed as well as the vulnerability of existing school infrastructure and the contributing factors of overall risk in the education portfolio.{% endblocktrans %}</li>
+  <li><strong>{% trans "The" %} <a href="http://www.projects.worldbank.org/P145347?lang=en" traget="_new">{% trans "Trans-Hindukush Road Connectivity Project" %}</a></strong> {% blocktrans %}for Afghanistan aims to improve road transport connectivity across the Hindukush mountain range. The work carried out has informed a risk assessment of two transport corridors; the Salang Pass and the Baghlan to Bamyan highway, to support the selection of risk mitigation measures in highly vulnerable transportation corridors as well as to design investments plans to reduce hazard severity along with a cost-benefit analysis for the proposed investments.{% endblocktrans %}</li>
+  <li><strong>{% trans "The" %} <a href="http://projects.worldbank.org/P160567?lang=en" traget="_new">{% trans "Citizens' Charter Afghanistan Project (CCAP)" %}</a></strong> {% blocktrans %}is a National Priority Program (NPP). The CCAP is the first ever inter-ministerial, multi-sectorial NPP in Afghanistan, where Ministries will collaborate on a single program using a programmatic approach, including rural development, education, health and agriculture and irrigation. Community Development Councils (CDCs) will be linked to sub-national government to improve communications and coordination from the community to the district, provincial and national levels, which will increase Government visibility and accountability. The work carried out has trained engineers and decision makers on core infrastructure resilience principles and will inform hazard vulnerability analysis for prioritization of investments, create disaster risk awareness and preparedness at the community level and provide training of CDCs, which will incorporate gender considerations. With the help of technology, three community-informed disaster risk management plans with gender considerations have been developed. Additional communities are underway with potential financing for investments.{% endblocktrans %}</li>
+  <li><strong>{% trans "The" %} <a href="http://www.projects.worldbank.org/P132944/naghlu-hydropower-rehabilitation-project?lang=en" traget="_new">{% trans "Naghlu Hydropower Rehabilitation Project)" %}</a>:</strong> {% blocktrans %}This energy project, currently under implementation, aims to improve dam safety and to increase the supply of electricity at the Naghlu Hydropower Plant. The work carried out has been essential in providing risk information that designs the DRM framework for the energy sector, assist with the adaptation of policy formulation and produced action plans to reduce overall vulnerabilities, within lending operations.{% endblocktrans %}</li>
+ </ul>
+</p>
+<p class="lead">{% trans "Training and Sustainability Efforts" %}</p>
+<p>
+{% blocktrans %}
+The World Bank has provided training on the use of GeoNode to over 80 key GoA staff comprising 7 national agencies. From the trainings, however, a number of lessons have been learned: all trainees shared a very limited DRM capacity and according to them, DRM principles are not incorporated or mainstreamed at any of the agencies or ministries in a significant manner. Similarly, there are no guidelines or protocols for incorporating DRM principles or performance measurements into project planning and design. Finally, there seems to be very little DRM-related coordination between GoA agencies and Ministries.
+{% endblocktrans %}
+</p>
+<p>
+{% blocktrans %}
+To narrow these gaps, and with support of the Bank team, more targeted training and a pilot dedicated resource center for continued in-house technical expertise has been established at MRRD. The center, which is being leveraged to support CCAP, consists of a GIS/DRM service center to support feasibility studies, hazard and vulnerability mapping and provides inputs into planning and in the context of World Bank Group projects. The center is providing recommendations to MRRD on how to most effectively incorporate DRM across its governance and program structure. Discussions with MRRD are ongoing to sustain the services provided by the center in the long-run and beyond CCAP. With help of the resource center, MRRD officials have trained over 4,500 communities in DRM.
+{% endblocktrans %}
+</p>
+<p>
+{% blocktrans %}
+A broader strategy to replicate these efforts in other GoA agencies is ongoing as well as discussions for a partial, and eventually a full transition of the GeoNode.
+{% endblocktrans %}
+</p>
+<p class="lead">{% trans "Tutorial videos" %}</p>
+<p>
+{% blocktrans %}
+Click below for the tutorial videos on how to search data, create maps, download layers and create maps offline using the disastrisk.af platform.
+{% endblocktrans %}
+</p>
+<p>
+ <ul>
+  <li>English</li>
+  <li>Dari</li>
+  <li>Pashto</li>
+  <li>...</li>
+ </ul>
+</p>
+{% endblock %}
