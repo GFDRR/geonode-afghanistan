@@ -14,5 +14,8 @@ urlpatterns = [
    url(r'^project_information/$',
        TemplateView.as_view(template_name='project_information.html'),
        name='project_information'),
+   url(r'^tutorial_videos/$',
+       TemplateView.as_view(template_name='tutorial_videos.html'),
+       name='tutorial_videos'),
 
 ] + urlpatterns

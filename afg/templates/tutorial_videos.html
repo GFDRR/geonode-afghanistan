@@ -1,0 +1,23 @@
+{% extends "geonode_base.html" %}
+
+{% load i18n %}
+{% block title %} {% trans "Tutorial Videos" %} — {{ block.super }} {% endblock %}
+
+{% block body_outer %}
+<div class="page-header">
+  <h2>{% trans "Tutorial Videos" %}</h2>
+</div>
+<p class="lead"><strong>{% trans "Tutorial videos" %}</strong></p>
+<p>
+{% blocktrans %}
+Click below for the tutorial videos on how to search data, create maps, download layers and create maps offline using the <code>disastrisk.af</code> platform.
+{% endblocktrans %}
+</p>
+<p>
+ <ul>
+  <li><a href="#">{% trans "How to search, create maps and download layers in GeoNode (English)" %}</a></li>
+  <li><a href="#">{% trans "How to search, create maps and download layers in GeoNode (Dari)" %}</a></li>
+  <li><a href="#">{% trans "How to search, create maps and download layers in GeoNode (Pashto)" %}</a></li>
+ </ul>
+</p>
+{% endblock %}
