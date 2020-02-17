@@ -1,0 +1,151 @@
+# -*- coding: utf-8 -*-
+#########################################################################
+#
+# Copyright (C) 2016 OSGeo
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+#########################################################################
+
+import os
+from geonode.settings import *
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
+
+# add trailing slash to site url. geoserver url will be relative to this
+if not SITEURL.endswith('/'):
+    SITEURL = '{}/'.format(SITEURL)
+
+# MEDIA_ROOT = os.getenv('MEDIA_ROOT', os.path.join(PROJECT_ROOT, "uploaded"))
+
+# STATIC_ROOT = os.getenv('STATIC_ROOT',
+#                        os.path.join(PROJECT_ROOT, "static_root")
+#                        )
+
+MEDIA_ROOT = '/home/geosolutions/venv/htdocs/uploaded/'
+STATIC_ROOT = '/home/geosolutions/venv/htdocs/static'
+
+ALLOWED_HOSTS = ['localhost', 'disasterrisk.af']
+
+TIME_ZONE = 'Asia/Kabul'
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'geonode_risk_afg',
+        'USER': 'geonode',
+        'PASSWORD': '*****************',
+        'HOST' : 'localhost',
+        'PORT' : '5432',
+        'CONN_MAX_AGE': 5,
+        'CONN_TOUT': 5,
+        'OPTIONS': {
+            'connect_timeout': 5,
+        }
+    },
+    # vector datastore for uploads
+    'datastore': {
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        #'ENGINE': '', # Empty ENGINE name disables
+        'NAME': 'geonode_risk_afg_data',
+        'USER' : 'geonode',
+        'PASSWORD': '*******************',
+        'HOST': 'localhost',
+        'PORT': '5432',
+        'CONN_MAX_AGE': 5,
+        'CONN_TOUT': 5,
+        'OPTIONS': {
+            'connect_timeout': 5,
+        }
+    }
+}
+
+GEOSERVER_LOCATION = os.getenv(
+    'GEOSERVER_LOCATION', 'http://localhost:8080/geoserver/'
+)
+
+GEOSERVER_PUBLIC_SCHEMA = os.getenv(
+    'GEOSERVER_PUBLIC_SCHEMA', SITE_HOST_SCHEMA
+)
+
+GEOSERVER_PUBLIC_HOST = os.getenv(
+    'GEOSERVER_PUBLIC_HOST', SITE_HOST_NAME
+)
+
+GEOSERVER_PUBLIC_PORT = os.getenv(
+    'GEOSERVER_PUBLIC_PORT', 8080
+)
+
+_default_public_location = '{}://{}:{}/geoserver/'.format(
+    GEOSERVER_PUBLIC_SCHEMA,
+    GEOSERVER_PUBLIC_HOST,
+    GEOSERVER_PUBLIC_PORT) if GEOSERVER_PUBLIC_PORT else '{}://{}/geoserver/'.format(GEOSERVER_PUBLIC_SCHEMA, GEOSERVER_PUBLIC_HOST)
+
+GEOSERVER_PUBLIC_LOCATION = os.getenv(
+    'GEOSERVER_PUBLIC_LOCATION', _default_public_location
+)
+
+GEOSERVER_WEB_UI_LOCATION = os.getenv(
+    'GEOSERVER_WEB_UI_LOCATION', GEOSERVER_PUBLIC_LOCATION
+)
+
+OGC_SERVER_DEFAULT_USER = os.getenv(
+    'GEOSERVER_ADMIN_USER', 'admin'
+)
+
+OGC_SERVER_DEFAULT_PASSWORD = os.getenv(
+    'GEOSERVER_ADMIN_PASSWORD', '**********************'
+)
+
+GEOFENCE_SECURITY_ENABLED = False if TEST and not INTEGRATION else ast.literal_eval(os.getenv('GEOFENCE_SECURITY_ENABLED', 'True'))
+
+# OGC (WMS/WFS/WCS) Server Settings
+# OGC (WMS/WFS/WCS) Server Settings
+OGC_SERVER = {
+    'default': {
+        'BACKEND': 'geonode.geoserver',
+        'LOCATION': GEOSERVER_LOCATION,
+        'WEB_UI_LOCATION': GEOSERVER_WEB_UI_LOCATION,
+        'LOGIN_ENDPOINT': 'j_spring_oauth2_geonode_login',
+        'LOGOUT_ENDPOINT': 'j_spring_oauth2_geonode_logout',
+        # PUBLIC_LOCATION needs to be kept like this because in dev mode
+        # the proxy won't work and the integration tests will fail
+        # the entire block has to be overridden in the local_settings
+        'PUBLIC_LOCATION': GEOSERVER_PUBLIC_LOCATION,
+        'USER': OGC_SERVER_DEFAULT_USER,
+        'PASSWORD': OGC_SERVER_DEFAULT_PASSWORD,
+        'MAPFISH_PRINT_ENABLED': ast.literal_eval(os.getenv('MAPFISH_PRINT_ENABLED', 'True')),
+        'PRINT_NG_ENABLED': ast.literal_eval(os.getenv('PRINT_NG_ENABLED', 'True')),
+        'GEONODE_SECURITY_ENABLED': ast.literal_eval(os.getenv('GEONODE_SECURITY_ENABLED', 'True')),
+        'GEOFENCE_SECURITY_ENABLED': GEOFENCE_SECURITY_ENABLED,
+        'GEOFENCE_URL': os.getenv('GEOFENCE_URL', 'internal:/'),
+        'WMST_ENABLED': ast.literal_eval(os.getenv('WMST_ENABLED', 'False')),
+        'BACKEND_WRITE_ENABLED': ast.literal_eval(os.getenv('BACKEND_WRITE_ENABLED', 'True')),
+        'WPS_ENABLED': ast.literal_eval(os.getenv('WPS_ENABLED', 'True')),
+        'LOG_FILE': '%s/geoserver/data/logs/geoserver.log'
+        % os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir)),
+        # Set to name of database in DATABASES dictionary to enable
+        # 'datastore',
+        'DATASTORE': os.getenv('DEFAULT_BACKEND_DATASTORE', ''),
+        'TIMEOUT': int(os.getenv('OGC_REQUEST_TIMEOUT', '20')),
+        'MAX_RETRIES': int(os.getenv('OGC_REQUEST_MAX_RETRIES', '5')),
+        'BACKOFF_FACTOR': float(os.getenv('OGC_REQUEST_BACKOFF_FACTOR', '0.3')),
+        'POOL_MAXSIZE': int(os.getenv('OGC_REQUEST_POOL_MAXSIZE', '10')),
+        'POOL_CONNECTIONS': int(os.getenv('OGC_REQUEST_POOL_CONNECTIONS', '10')),
+    }
+}
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = [SITEURL[:-1], ]
+GEOIP_PATH = "/usr/local/share/GeoIP"

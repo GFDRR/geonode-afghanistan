@@ -118,15 +118,13 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler',
-        },
+        }
     },
     "loggers": {
         "django": {
             "handlers": ["console"], "level": "ERROR", },
         "geonode": {
-            "handlers": ["console"], "level": "DEBUG", },
-        "geonode_risks": {
-            "handlers": ["console"], "level": "ERROR", },
+            "handlers": ["console"], "level": "INFO", },
         "geonode.qgis_server": {
             "handlers": ["console"], "level": "ERROR", },
         "geoserver-restconfig.catalog": {
@@ -137,6 +135,10 @@ LOGGING = {
             "handlers": ["console"], "level": "ERROR", },
         "celery": {
             "handlers": ["console"], "level": "ERROR", },
+        "mapstore2_adapter.plugins.serializers": {
+            "handlers": ["console"], "level": "DEBUG", },
+        "geonode_logstash.logstash": {
+            "handlers": ["console"], "level": "DEBUG", },
     },
 }
 
@@ -149,3 +151,66 @@ SECURE_BROWSER_XSS_FILTER = True
 SECURE_SSL_REDIRECT = True
 SECURE_HSTS_SECONDS = 3600
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+
+
+# Settings for MONITORING plugin
+MONITORING_ENABLED = ast.literal_eval(os.environ.get('MONITORING_ENABLED', 'True'))
+
+MONITORING_CONFIG = os.getenv("MONITORING_CONFIG", None)
+MONITORING_HOST_NAME = os.getenv("MONITORING_HOST_NAME", 'geonode')
+MONITORING_SERVICE_NAME = os.getenv("MONITORING_SERVICE_NAME", 'local-geonode')
+
+# how long monitoring data should be stored
+MONITORING_DATA_TTL = timedelta(days=int(os.getenv("MONITORING_DATA_TTL", 365)))
+
+# this will disable csrf check for notification config views,
+# use with caution - for dev purpose only
+MONITORING_DISABLE_CSRF = ast.literal_eval(os.environ.get('MONITORING_DISABLE_CSRF', 'False'))
+
+if MONITORING_ENABLED:
+    if 'geonode.monitoring' not in INSTALLED_APPS:
+        INSTALLED_APPS += ('geonode.monitoring',)
+    if 'geonode.monitoring.middleware.MonitoringMiddleware' not in MIDDLEWARE_CLASSES:
+        MIDDLEWARE_CLASSES += \
+            ('geonode.monitoring.middleware.MonitoringMiddleware',)
+
+    # skip certain paths to not to mud stats too much
+    MONITORING_SKIP_PATHS = ('/api/o/',
+                             '/monitoring/',
+                             '/admin',
+                             '/jsi18n',
+                             STATIC_URL,
+                             MEDIA_URL,
+                             re.compile('^/[a-z]{2}/admin/'),
+                             )
+
+    # configure aggregation of past data to control data resolution
+    # list of data age, aggregation, in reverse order
+    # for current data, 1 minute resolution
+    # for data older than 1 day, 1-hour resolution
+    # for data older than 2 weeks, 1 day resolution
+    MONITORING_DATA_AGGREGATION = (
+        (timedelta(seconds=0), timedelta(minutes=1),),
+        (timedelta(days=1), timedelta(minutes=60),),
+        (timedelta(days=14), timedelta(days=1),),
+    )
+
+    CELERY_BEAT_SCHEDULE['collect_metrics'] = {
+        'task': 'geonode.monitoring.tasks.collect_metrics',
+        'schedule': 600.0,
+    }
+
+USER_ANALYTICS_ENABLED = ast.literal_eval(os.getenv('USER_ANALYTICS_ENABLED', 'True'))
+USER_ANALYTICS_GZIP = ast.literal_eval(os.getenv('USER_ANALYTICS_GZIP', 'True'))
+
+GEOIP_PATH = os.getenv('GEOIP_PATH', os.path.join(PROJECT_ROOT, 'GeoIPCities.dat'))
+# -- END Settings for MONITORING plugin
+
+if USER_ANALYTICS_ENABLED and 'geonode_logstash' not in INSTALLED_APPS:
+    INSTALLED_APPS += ('geonode_logstash',)
+
+    CELERY_BEAT_SCHEDULE['dispatch_metrics'] = {
+        'task': 'geonode_logstash.tasks.dispatch_metrics',
+        'schedule': 3600.0,
+    }
+

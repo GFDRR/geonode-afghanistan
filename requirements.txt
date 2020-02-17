@@ -1,1 +1,1 @@
-geonode==2.10.1
+# geonode==2.10.1
