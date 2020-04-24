@@ -1,7 +1,4 @@
-#!/bin/sh
-
-# Exit script in case of error
-set -e
+#! /bin/bash
 
 echo "-----------------------------------------------------"
 echo "STARTING RESTORE $(date)"
@@ -31,9 +28,17 @@ BKP_FILE_NAME=$(echo $BKP_FILE_LATEST | tail -n 1 | grep -oP -m 1 "\/$BKP_FOLDER
 
 if md5sum -c /$BKP_FOLDER_NAME/$BKP_FILE_NAME.md5; then
     # The MD5 sum matched
-    ./manage.sh restore -c afg/br/settings_afg.ini -n -f --backup-file /$BKP_FOLDER_NAME/$BKP_FILE_NAME.zip
-    ./manage.sh migrate_baseurl -f --source-address=$SOURCE_URL --target-address=$TARGET_URL
-    ./manage.sh set_all_layers_metadata -d -i
+    ./manage.sh restore -c afg/br/settings_afg.ini -f --backup-file /$BKP_FOLDER_NAME/$BKP_FILE_NAME.zip
+    if [ "$?" != 0 ]
+    then
+        echo "-----------------------------------------------------"
+        echo "ERROR: Could not successfully restore file /$BKP_FOLDER_NAME/$BKP_FILE_NAME.zip"
+        echo "-----------------------------------------------------"
+        exit 1
+    else
+        ./manage.sh migrate_baseurl -f --source-address=$SOURCE_URL --target-address=$TARGET_URL
+        ./manage.sh set_all_layers_metadata -d -i
+    fi
 else
     # The MD5 sum didn't match
     echo "-----------------------------------------------------"
