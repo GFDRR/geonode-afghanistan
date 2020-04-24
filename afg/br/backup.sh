@@ -1,7 +1,4 @@
-#!/bin/sh
-
-# Exit script in case of error
-set -e
+#! /bin/bash
 
 echo "-----------------------------------------------------"
 echo "STARTING BACKUP $(date)"
