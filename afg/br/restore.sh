@@ -28,7 +28,7 @@ BKP_FILE_NAME=$(echo $BKP_FILE_LATEST | tail -n 1 | grep -oP -m 1 "\/$BKP_FOLDER
 
 if md5sum -c /$BKP_FOLDER_NAME/$BKP_FILE_NAME.md5; then
     # The MD5 sum matched
-    ./manage.sh restore -c afg/br/settings_afg.ini -f --backup-file /$BKP_FOLDER_NAME/$BKP_FILE_NAME.zip
+    ./manage.sh restore -c $PWD/afg/br/settings_afg.ini -f --backup-file /$BKP_FOLDER_NAME/$BKP_FILE_NAME.zip
     if [ "$?" != 0 ]
     then
         echo "-----------------------------------------------------"
