@@ -70,7 +70,7 @@ The admin command to backup and restore GeoNode, allows to extract consistently 
 
 Before running a GeoNode backup / restore, it is necessary to ensure everything is correctly configured and setup.
 
-Double check the b&r filters from the ``afg/br/settings_afg.ini`` file, then
+Double check the b&r filters from the ``afg/br/settings_afg.ini`` file; B&R settings docuemntation is available from official GeoNode docs [here](https://docs.geonode.org/en/master/intermediate/backup/index.html#settings).
 
 Run a backup on the source instance through::
 
