@@ -1,5 +1,5 @@
 Afg
-========================
+===
 
 You should write some docs, it's good for the soul.
 
@@ -63,9 +63,29 @@ Edit the templates in my_geonode/templates, the css and images to match your nee
 In the my_geonode folder run::
 
     $ python manage.py collectstatic
+ 
+Backup & Restore
+----------------
+The admin command to backup and restore GeoNode, allows to extract consistently the GeoNode and GeoServer data models in a serializable meta-format which is being interpreted later by the restore procedure in order to exactly rebuild the whole structure.
+
+Before running a GeoNode backup / restore, it is necessary to ensure everything is correctly configured and setup.
+
+Double check the b&r filters from the ``afg/br/settings_afg.ini`` file, then
+
+Run a backup on the source instance through::
+
+    SOURCE_URL=https://disasterrisk.af TARGET_URL=https://stage1.disasterrisk.af sudo afg/br/backup.sh
+
+The Bakcup ZIP Archive will be stored into the ``/data/backup_restore/`` folder.
+
+Run a restore on the target instance through::
+
+    SOURCE_URL=https://disasterrisk.af TARGET_URL=https://stage1.disasterrisk.af afg/br/restore.sh
+
+The Bakcup ZIP Archive will be read from the ``/data/backup_restore/`` folder.
 
 Github Considerations
-------------------------
+---------------------
 
 While it is helpful to recommit your django project wrapper back to a distributed version control repository. 
 * It is also important to remember that production instances will store security information in the local_settings.py
